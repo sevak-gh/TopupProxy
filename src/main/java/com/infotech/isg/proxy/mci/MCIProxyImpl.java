@@ -172,7 +172,7 @@ public class MCIProxyImpl implements MCIProxy {
         // process response
         MCIProxyGetRemainedBrokerRechargeResponse response = SOAPHelper.parseResponse(soapResponse,
                 namespace,
-                "GetRemainedRechargeResponse",
+                "GetRemainedBrokerRechargeResponse",
                 MCIProxyGetRemainedBrokerRechargeResponse.class);
 
         return response;
