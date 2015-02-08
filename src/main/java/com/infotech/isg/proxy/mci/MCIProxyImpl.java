@@ -67,21 +67,21 @@ public class MCIProxyImpl implements MCIProxy {
         // add request body/header
         try {
             SOAPHeader header = request.getSOAPHeader();
-            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", "ns"));
-            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", "ns"));
+            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", SOAPHelper.NAMESPACE_PREFIX));
             usernameElement.setValue(username);
-            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", "ns"));
+            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", SOAPHelper.NAMESPACE_PREFIX));
             String combination = username.toUpperCase() + "|" + password + "|" + token;
             passwordElement.setValue(HashGenerator.getMD5(combination));
             SOAPBody body = request.getSOAPBody();
-            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_RECHARGE, "ns"));
-            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", "ns"));
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_RECHARGE, SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode(username);
-            element = bodyElement.addChildElement(new QName(namespace, "MobileNumber", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "MobileNumber", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode(consumer);
-            element = bodyElement.addChildElement(new QName(namespace, "CardAmount", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "CardAmount", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode(Integer.toString(amount));
-            element = bodyElement.addChildElement(new QName(namespace, "TransactionID", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "TransactionID", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode("MCI" + Long.toString(trId));
             request.saveChanges();
         } catch (SOAPException e) {
@@ -109,19 +109,19 @@ public class MCIProxyImpl implements MCIProxy {
         // add request body/header
         try {
             SOAPHeader header = request.getSOAPHeader();
-            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", "ns"));
-            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", "ns"));
+            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", SOAPHelper.NAMESPACE_PREFIX));
             usernameElement.setValue(username);
-            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", "ns"));
+            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", SOAPHelper.NAMESPACE_PREFIX));
             String combination = username.toUpperCase() + "|" + password + "|" + token;
             passwordElement.setValue(HashGenerator.getMD5(combination));
             SOAPBody body = request.getSOAPBody();
-            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_RECHARGE, "ns"));
-            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", "ns"));
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_RECHARGE_VERIFY, SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode(username);
-            element = bodyElement.addChildElement(new QName(namespace, "MobileNumber", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "MobileNumber", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode(consumer);
-            element = bodyElement.addChildElement(new QName(namespace, "TransactionID", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "TransactionID", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode("MCI" + Long.toString(trId));
             request.saveChanges();
         } catch (SOAPException e) {
@@ -149,17 +149,17 @@ public class MCIProxyImpl implements MCIProxy {
         // add request body/header
         try {
             SOAPHeader header = request.getSOAPHeader();
-            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", "ns"));
-            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", "ns"));
+            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", SOAPHelper.NAMESPACE_PREFIX));
             usernameElement.setValue(username);
-            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", "ns"));
+            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", SOAPHelper.NAMESPACE_PREFIX));
             String combination = username.toUpperCase() + "|" + password + "|" + token;
             passwordElement.setValue(HashGenerator.getMD5(combination));
             SOAPBody body = request.getSOAPBody();
-            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_GET_REMAINED_BROKER_RECHARGE, "ns"));
-            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", "ns"));
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_GET_REMAINED_BROKER_RECHARGE, SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode(username);
-            element = bodyElement.addChildElement(new QName(namespace, "CardAmount", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "CardAmount", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode(Integer.toString(amount));
             request.saveChanges();
         } catch (SOAPException e) {

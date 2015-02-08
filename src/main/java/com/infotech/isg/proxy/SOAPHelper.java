@@ -33,6 +33,8 @@ public class SOAPHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(SOAPHelper.class);
 
+    public static final String NAMESPACE_PREFIX = "ns";
+
     /**
      * creates empty soap request message
      */
@@ -41,9 +43,11 @@ public class SOAPHelper {
         try {
             request = MessageFactory.newInstance().createMessage();
             SOAPEnvelope envelope = request.getSOAPPart().getEnvelope();
-            envelope.addNamespaceDeclaration("ns", namespace);
+            envelope.addNamespaceDeclaration(NAMESPACE_PREFIX, namespace);
             SOAPBody body = request.getSOAPBody();
-            request.getMimeHeaders().addHeader("SOAPAction", "\"" + soapAction + "\"");
+            if (soapAction != null) {
+                request.getMimeHeaders().addHeader("SOAPAction", "\"" + soapAction + "\"");
+            }
             request.saveChanges();
         } catch (SOAPException e) {
             throw new RuntimeException("soap request creation error", e);
@@ -91,7 +95,7 @@ public class SOAPHelper {
         T result = null;
         try {
             SOAPBody responseBody = response.getSOAPBody();
-            Iterator iterator = responseBody.getChildElements(new QName(namespace, tagName, "ns"));
+            Iterator iterator = responseBody.getChildElements(new QName(namespace, tagName, NAMESPACE_PREFIX));
             if (!iterator.hasNext()) {
                 throw new ProxyAccessException("soap response body missing expected item");
             }

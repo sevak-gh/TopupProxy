@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlElement;
 public abstract class MCIProxyResponse {
 
     @XmlElement(name = "string")
-    private List<String> response;
+    protected List<String> response;
 
     public List<String> getResponse() {
         return response;
