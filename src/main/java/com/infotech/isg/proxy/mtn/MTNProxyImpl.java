@@ -13,6 +13,9 @@ import javax.xml.soap.SOAPException;
 import javax.xml.namespace.QName;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,37 +87,23 @@ public class MTNProxyImpl implements MTNProxy {
         try {
             SOAPBody body = request.getSOAPBody();
             SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, "processRequest", SOAPHelper.NAMESPACE_PREFIX));
-            SOAPElement etiElement = bodyElement.addChildElement("ETIRequest");
-            SOAPElement element = etiElement.addChildElement(new QName(namespace, "RequestMessage", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode(command);
-            element = etiElement.addChildElement(new QName(namespace, "ClientID", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode("");
-            element = etiElement.addChildElement(new QName(namespace, "Password", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode("");
-            SOAPElement parameters = etiElement.addChildElement(new QName(namespace, "Parameters", SOAPHelper.NAMESPACE_PREFIX));
-            SOAPElement parameter = parameters.addChildElement(new QName(namespace, "Parameter", SOAPHelper.NAMESPACE_PREFIX));
-            element = parameter.addChildElement(new QName(namespace, "key", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode("ext_tid");
-            element = parameter.addChildElement(new QName(namespace, "value", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode("info" + Long.toString(trId));
-            parameter = parameters.addChildElement(new QName(namespace, "Parameter", SOAPHelper.NAMESPACE_PREFIX));
-            element = parameter.addChildElement(new QName(namespace, "key", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode("ext_id");
-            element = parameter.addChildElement(new QName(namespace, "value", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode("Internet");
-            parameter = parameters.addChildElement(new QName(namespace, "Parameter", SOAPHelper.NAMESPACE_PREFIX));
-            element = parameter.addChildElement(new QName(namespace, "key", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode("ext_name");
-            element = parameter.addChildElement(new QName(namespace, "value", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode(vendor);
-            parameter = parameters.addChildElement(new QName(namespace, "Parameter", SOAPHelper.NAMESPACE_PREFIX));
-            element = parameter.addChildElement(new QName(namespace, "key", SOAPHelper.NAMESPACE_PREFIX));
-            element.addTextNode("ext_date");
-            element = parameter.addChildElement(new QName(namespace, "value", SOAPHelper.NAMESPACE_PREFIX));
+            MTNProxyRequest etiRequest = new MTNProxyRequest();
+            etiRequest.setCommand(command);
+            etiRequest.setUsername("");
+            etiRequest.setPassword("");
+            etiRequest.addParameter("ext_tid", "info" + Long.toString(trId));
+            etiRequest.addParameter("ext_id", "Internet");
+            etiRequest.addParameter("ext_name", vendor);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            element.addTextNode(dateFormat.format(new Date()));
+            etiRequest.addParameter("ext_date", dateFormat.format(new Date()));
+            JAXBContext jaxbContext = JAXBContext.newInstance(MTNProxyRequest.class);
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
+            marshaller.marshal(etiRequest, bodyElement);
             request.saveChanges();
         } catch (SOAPException e) {
+            throw new RuntimeException("soap extended request creation error", e);
+        } catch (JAXBException e) {
             throw new RuntimeException("soap extended request creation error", e);
         }
 
