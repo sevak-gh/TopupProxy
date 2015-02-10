@@ -78,6 +78,16 @@ public class MTNProxyImpl implements MTNProxy {
         return serviceCall(String.format("%s:%d:%s:43|%s", consumer, amount, username, password), trId);
     }
 
+    @Override
+    public MTNProxyResponse verify(long trId) {
+        return serviceCall(String.format("gs:%s|%s", username, password), trId);
+    }
+
+    @Override
+    public MTNProxyResponse getBalance() {
+        return serviceCall(String.format("gb:%s|%s", username, password), 0);
+    }
+
     private MTNProxyResponse serviceCall(String command, long trId) {
 
         // create empty soap request
