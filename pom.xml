@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.infotech.isg</groupId>
-  <artifactId>isgproxy</artifactId>
+  <artifactId>isgcommon</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>isgproxy</name>
+  <name>isgcommon</name>
   <url>http://www.infotech-co.com</url>
 
     <!-- List the core committers -->
@@ -34,12 +34,16 @@
         <mockito.version>1.10.8</mockito.version>
         <hamcrest.version>1.3</hamcrest.version>
 
+        <!-- spring -->
+        <spring.version>4.1.1.RELEASE</spring.version>
+
         <!-- log -->
         <slf4j.version>1.7.6</slf4j.version>
 
     </properties>      
 
     <dependencies>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -86,10 +90,28 @@
             <version>${slf4j.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>  
-        <finalName>isgproxy</finalName>
+        <finalName>isgcommon</finalName>
 
         <plugins>
 
