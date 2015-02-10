@@ -49,6 +49,17 @@ public class MTNProxyRequest {
         public void add(Parameter parameter) {
             parameterList.add(parameter);
         }
+
+        public String getParameterValue(String key) {
+            String value = null;
+            for (Parameter param : parameterList) {
+                if (param.getKey().equals(key)) {
+                    value = param.getValue();
+                    break;
+                }
+            }
+            return value;
+        }
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
@@ -115,6 +126,10 @@ public class MTNProxyRequest {
         parameter.setKey(key);
         parameter.setValue(value);
         parameters.add(parameter);
+    }
+
+    public String getParameterValue(String key) {
+        return parameters.getParameterValue(key);
     }
 
     @Override

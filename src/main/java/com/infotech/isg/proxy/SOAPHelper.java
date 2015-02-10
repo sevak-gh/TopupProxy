@@ -17,6 +17,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 import java.net.URL;
 import java.net.MalformedURLException;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +65,9 @@ public class SOAPHelper {
         SOAPMessage response = null;
         SOAPConnection cnn = null;
         try {
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) { return true; }
+            });
             cnn = SOAPConnectionFactory.newInstance().createConnection();
             URL endpoint = new URL(url);
             if (LOG.isDebugEnabled()) {
