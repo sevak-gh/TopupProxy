@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Sevak Gharibian
  */
 public interface AuditLogRepository {
-    public void create(String username, String bankCode, int amount,
+    public void create(String username, String bankCode, String amount,
                        String channel, String state, String bankReceipt,
                        String orderId, String consumer, String customerIp,
                        String remoteIp, String action, int operatorId,

@@ -14,6 +14,7 @@ public class JiringProxyImpl implements JiringProxy {
 
     private static final String SALES_REQUEST_FUNCTION_NAME = "SALESREQUEST";
     private static final String SALES_REQUEST_EXEC_FUNCTION_NAME = "SALESREQUESTEXEC";
+    private static final String BALANCE_FUNCTION_NAME = "BALANCE";
     private static final String SALES_REQUEST_EXEC_PARAM_2 = "APPROVE";
 
     private final String url;
@@ -51,6 +52,16 @@ public class JiringProxyImpl implements JiringProxy {
         request.setFunctionName(SALES_REQUEST_EXEC_FUNCTION_NAME);
         request.setFunctionParam1(token);
         request.setFunctionParam2(SALES_REQUEST_EXEC_PARAM_2);
+        TCSResponse response = TCSConnection.call(request, url);
+        return response;
+    }
+
+    @Override
+    public TCSResponse balance() {
+        TCSRequest request = new TCSRequest();
+        request.setUsername(username);
+        request.setPassword(password);
+        request.setFunctionName(BALANCE_FUNCTION_NAME);
         TCSResponse response = TCSConnection.call(request, url);
         return response;
     }

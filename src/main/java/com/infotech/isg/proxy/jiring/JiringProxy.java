@@ -8,4 +8,5 @@ package com.infotech.isg.proxy.jiring;
 public interface JiringProxy {
     public TCSResponse salesRequest(String consumer, int amount);
     public TCSResponse salesRequestExec(String token);
+    public TCSResponse balance();
 }

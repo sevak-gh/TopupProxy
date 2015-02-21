@@ -19,6 +19,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * jdbc implementation for Transaction repository.
@@ -27,6 +29,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
  */
 @Repository("JdbcTransactionRepository")
 public class JdbcTransactionRepositoryImpl implements TransactionRepository {
+
+    private final Logger LOG = LoggerFactory.getLogger(JdbcOperatorRepositoryImpl.class);
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -54,6 +58,22 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                      + "bkreverse from info_topup_transactions where stf = ? and "
                      + "provider = ?";
         return jdbcTemplate.query(sql, new Object[] {stf, provider}, new TransactionRowMapper());
+    }
+
+    @Override
+    public Transaction findByProviderTransactionId(int provider, String transactionId) {
+        String sql = "select id, provider, token, type, state, resnum, refnum, revnum, "
+                     + "clientip, amount, channel, consumer, bankcode, client, customerip, "
+                     + "trtime, bankverify, verifytime, status, operator, oprcommand, "
+                     + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, "
+                     + "bkreverse from info_topup_transactions where provider = ? and oprtid = ?";
+        Transaction transaction = null;
+        try {
+            transaction = jdbcTemplate.queryForObject(sql, new Object[] {provider, transactionId}, new TransactionRowMapper());
+        } catch (EmptyResultDataAccessException e) {
+            LOG.debug("jdbctemplate empty result set handled", e);
+        }
+        return transaction;
     }
 
     @Override
