@@ -20,22 +20,20 @@ public class JiringProxyImpl implements JiringProxy {
     private final String url;
     private final String username;
     private final String password;
-    private final String brand;
 
-    public JiringProxyImpl(String url, String username, String password, String brand) {
+    public JiringProxyImpl(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
-        this.brand = brand;
     }
 
     @Override
-    public TCSResponse salesRequest(String consumer, int amount) {
+    public TCSResponse salesRequest(String consumer, int amount, String brandId) {
         TCSRequest request = new TCSRequest();
         request.setUsername(username);
         request.setPassword(password);
         request.setFunctionName(SALES_REQUEST_FUNCTION_NAME);
-        request.setFunctionParam1(brand);
+        request.setFunctionParam1(brandId);
         request.setFunctionParam2(Integer.toString(amount));
         request.setFunctionParam4(username);
         request.setFunctionParam6(consumer);
@@ -45,10 +43,11 @@ public class JiringProxyImpl implements JiringProxy {
     }
 
     @Override
-    public TCSResponse salesRequestExec(String token) {
+    public TCSResponse salesRequestExec(String token, boolean checkOnly) {
         TCSRequest request = new TCSRequest();
         request.setUsername(username);
         request.setPassword(password);
+        request.setCheckOnly(checkOnly);
         request.setFunctionName(SALES_REQUEST_EXEC_FUNCTION_NAME);
         request.setFunctionParam1(token);
         request.setFunctionParam2(SALES_REQUEST_EXEC_PARAM_2);

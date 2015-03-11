@@ -42,6 +42,9 @@ public class TCSRequest {
     @XmlElement(name = "Password")
     private String password;
 
+    @XmlElement(name = "CheckOnly")
+    private boolean checkOnly;
+
     @XmlElement(name = "Function")
     private Function function;
 
@@ -55,6 +58,10 @@ public class TCSRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setCheckOnly(boolean checkOnly) {
+        this.checkOnly = checkOnly;
     }
 
     public void setFunctionName(String name) {
@@ -89,6 +96,10 @@ public class TCSRequest {
         return password;
     }
 
+    public boolean isCheckOnly() {
+        return checkOnly;
+    }
+
     public String getFunctionName() {
         return function.name;
     }
@@ -115,8 +126,10 @@ public class TCSRequest {
 
     @Override
     public String toString() {
-        return String.format("TCSRequest[username:%s, password:%s, function => %s(%s,%s,%s,%s,%s)]",
-                             username, password, function.name,
+        return String.format("TCSRequest[username:%s, password:%s, checkOnly: %s, function => %s(%s,%s,%s,%s,%s)]",
+                             username, password,
+                             Boolean.toString(checkOnly),
+                             function.name,
                              function.param1, function.param2,
                              function.param4, function.param6,
                              function.param7);

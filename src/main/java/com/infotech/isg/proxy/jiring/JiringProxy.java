@@ -6,7 +6,7 @@ package com.infotech.isg.proxy.jiring;
  * @author Sevak Gharibian
  */
 public interface JiringProxy {
-    public TCSResponse salesRequest(String consumer, int amount);
-    public TCSResponse salesRequestExec(String token);
+    public TCSResponse salesRequest(String consumer, int amount, String brandId);
+    public TCSResponse salesRequestExec(String token, boolean checkOnly);
     public TCSResponse balance();
 }
