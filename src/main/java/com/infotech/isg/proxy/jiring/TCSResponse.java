@@ -28,6 +28,12 @@ public class TCSResponse {
     @XmlElement(name = "param2")
     private String param2;
 
+    @XmlElement(name = "param3")
+    private String param3;
+
+    @XmlElement(name = "param4")
+    private String param4;
+
     public void setResult(String result) {
         this.result = result;
     }
@@ -44,6 +50,14 @@ public class TCSResponse {
         this.param2 = param2;
     }
 
+    public void setParam3(String param3) {
+        this.param3 = param3;
+    }
+
+    public void setParam4(String param4) {
+        this.param4 = param4;
+    }
+
     public String getResult() {
         return result;
     }
@@ -58,6 +72,14 @@ public class TCSResponse {
 
     public String getParam2() {
         return param2;
+    }
+
+    public String getParam3() {
+        return param3;
+    }
+
+    public String getParam4() {
+        return param4;
     }
 
     @Override
