@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sevak Gharibian
  */
-@Repository("JdbcOperatorStatusRepository")
+@Repository
 public class JdbcOperatorStatusRepositoryImpl implements OperatorStatusRepository {
 
     private final Logger LOG = LoggerFactory.getLogger(JdbcOperatorStatusRepositoryImpl.class);
@@ -47,8 +47,11 @@ public class JdbcOperatorStatusRepositoryImpl implements OperatorStatusRepositor
     }
 
     @Override
-    public void update(OperatorStatus operatorStatus) {
+    public void save(OperatorStatus operatorStatus) {
         final String sql = "update info_topup_operator_last_status set status=?, timestamp=? where id = ?";
+        if (operatorStatus.getId() == null) {
+            throw new RuntimeException("adding new OperatorStatus not supported");
+        }
         jdbcTemplate.update(sql, new Object[] {(operatorStatus.getIsAvailable()) ? "READY" : "DOWN", operatorStatus.getTimestamp(), operatorStatus.getId()});
     }
 

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sevak Gharibian
  */
-@Repository("JdbcClientRepository")
+@Repository
 public class JdbcClientRepositoryImpl implements ClientRepository {
 
     private final Logger LOG = LoggerFactory.getLogger(JdbcClientRepositoryImpl.class);

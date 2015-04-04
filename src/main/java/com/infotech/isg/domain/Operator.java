@@ -1,23 +1,38 @@
 package com.infotech.isg.domain;
 
-import java.util.Map;
-import java.util.HashMap;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Transient;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
 
 /**
  * domain object representing Telecom operator.
  *
  * @author Sevak Gharibian
  */
+@Entity
+@Table(name = "info_topup_operators")
 public class Operator {
 
-    private int id;
+    public enum StatusType {
+        active,
+        disabled
+    };
+
+    private Integer id;
     private String name;
     private boolean isActive;
+    private StatusType status;
 
     public static final int MTN_ID = 1;
     public static final int MCI_ID = 2;
     public static final int JIRING_ID = 3;
 
+    @Id
+    @Column(name="ID", nullable=false) 
     public int getId() {
         return id;
     }
@@ -26,6 +41,7 @@ public class Operator {
         this.id = id;
     }
 
+    @Column(name="NAME")
     public String getName() {
         return name;
     }
@@ -34,12 +50,25 @@ public class Operator {
         this.name = name;
     }
 
+    @Transient
     public boolean getIsActive() {
         return isActive;
     }
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+        status = (isActive) ? StatusType.active : StatusType.disabled;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="STATUS",nullable=false)
+    public StatusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusType status) {
+        this.status = status;
+        isActive = (status == StatusType.active) ? true : false;
     }
 
     @Override
@@ -56,4 +85,3 @@ public class Operator {
         }
     }
 }
-

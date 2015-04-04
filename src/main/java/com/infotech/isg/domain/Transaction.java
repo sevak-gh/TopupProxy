@@ -1,15 +1,47 @@
 package com.infotech.isg.domain;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Transient;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * domain object representing topup transaction.
  *
  * @author Sevak Gharibian
  */
+@NamedQueries({
+    @NamedQuery(
+    name = "findByRefNumBankCodeClientId",
+    query = "SELECT transaction FROM Transaction transaction WHERE transaction.refNum = :refNum " +   
+            "and transaction.bankCode = :bankCode and transaction.clientId = :clientId"
+    ),
+    @NamedQuery(
+    name = "findByStfProvider",
+    query = "SELECT transaction FROM Transaction transaction WHERE transaction.stf = :stf " +   
+            "and transaction.provider = :provider"
+    ),
+    @NamedQuery(
+    name = "findByProviderOperatorTId",
+    query = "SELECT transaction FROM Transaction transaction WHERE transaction.provider = :provider " +   
+            "and transaction.operatorTId = :operatorTId"
+    )
+})
+@Entity
+@Table(name = "info_topup_transactions")
 public class Transaction {
     // auto-id
-    private long id;
+    private Long id;
 
     // service provider id, such as MTN=1, MCI=2, Jiring=3
     private int provider;
@@ -94,7 +126,10 @@ public class Transaction {
     // seems like not being used anymore
     private Integer bkReverse;
 
-    public long getId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID", nullable=false)
+    public Long getId() {
         return id;
     }
 
@@ -102,6 +137,7 @@ public class Transaction {
         this.id = id;
     }
 
+    @Column(name="PROVIDER", nullable=false)
     public int getProvider() {
         return provider;
     }
@@ -109,7 +145,8 @@ public class Transaction {
     public void setProvider(int provider) {
         this.provider = provider;
     }
-
+    
+    @Column(name="TOKEN")
     public String getToken() {
         return token;
     }
@@ -118,6 +155,7 @@ public class Transaction {
         this.token = token;
     }
 
+    @Column(name="TYPE", nullable=false)
     public int getAction() {
         return action;
     }
@@ -126,6 +164,7 @@ public class Transaction {
         this.action = action;
     }
 
+    @Column(name="STATE", nullable=false)
     public String getState() {
         return state;
     }
@@ -134,6 +173,7 @@ public class Transaction {
         this.state = state;
     }
 
+    @Column(name="REFNUM", nullable=false)
     public String getRefNum() {
         return refNum;
     }
@@ -142,6 +182,7 @@ public class Transaction {
         this.refNum = refNum;
     }
 
+    @Column(name="RESNUM", nullable=false)
     public String getResNum() {
         return resNum;
     }
@@ -150,6 +191,7 @@ public class Transaction {
         this.resNum = resNum;
     }
 
+    @Column(name="REVNUM")
     public Long getRevNum() {
         return revNum;
     }
@@ -158,6 +200,7 @@ public class Transaction {
         this.revNum = revNum;
     }
 
+    @Column(name="CLIENTIP", nullable=false)
     public String getRemoteIp() {
         return remoteIp;
     }
@@ -166,6 +209,7 @@ public class Transaction {
         this.remoteIp = remoteIp;
     }
 
+    @Column(name="AMOUNT", nullable=false)
     public long getAmount() {
         return amount;
     }
@@ -173,7 +217,8 @@ public class Transaction {
     public void setAmount(long amount) {
         this.amount = amount;
     }
-
+    
+    @Column(name="CHANNEL", nullable=false)
     public String getChannel() {
         return channel;
     }
@@ -182,6 +227,7 @@ public class Transaction {
         this.channel = channel;
     }
 
+    @Column(name="CONSUMER", nullable=false)
     public String getConsumer() {
         return consumer;
     }
@@ -190,6 +236,7 @@ public class Transaction {
         this.consumer = consumer;
     }
 
+    @Column(name="BANKCODE", nullable=false)
     public String getBankCode() {
         return bankCode;
     }
@@ -198,6 +245,7 @@ public class Transaction {
         this.bankCode = bankCode;
     }
 
+    @Column(name="CLIENT", nullable=false)
     public int getClientId() {
         return clientId;
     }
@@ -206,6 +254,7 @@ public class Transaction {
         this.clientId = clientId;
     }
 
+    @Column(name="CUSTOMERIP", nullable=false)
     public String getCustomerIp() {
         return customerIp;
     }
@@ -214,6 +263,8 @@ public class Transaction {
         this.customerIp = customerIp;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="TRTIME", nullable=false)
     public Date getTrDateTime() {
         return trDateTime;
     }
@@ -222,6 +273,7 @@ public class Transaction {
         this.trDateTime = trDateTime;
     }
 
+    @Column(name="BANKVERIFY")
     public Integer getBankVerify() {
         return bankVerify;
     }
@@ -230,6 +282,8 @@ public class Transaction {
         this.bankVerify = bankVerify;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="VERIFYTIME")
     public Date getVerifyDateTime() {
         return verifyDateTime;
     }
@@ -238,6 +292,7 @@ public class Transaction {
         this.verifyDateTime = verifyDateTime;
     }
 
+    @Column(name="STATUS")
     public Integer getStatus() {
         return status;
     }
@@ -246,6 +301,7 @@ public class Transaction {
         this.status = status;
     }
 
+    @Column(name="OPERATOR")
     public Integer getOperatorResponseCode() {
         return operatorResponseCode;
     }
@@ -254,6 +310,7 @@ public class Transaction {
         this.operatorResponseCode = operatorResponseCode;
     }
 
+    @Column(name="OPRCOMMAND")
     public String getOperatorCommand() {
         return operatorCommand;
     }
@@ -262,6 +319,7 @@ public class Transaction {
         this.operatorCommand = operatorCommand;
     }
 
+    @Column(name="OPRRESPONSE")
     public String getOperatorResponse() {
         return operatorResponse;
     }
@@ -270,6 +328,7 @@ public class Transaction {
         this.operatorResponse = operatorResponse;
     }
 
+    @Column(name="OPRTID")
     public String getOperatorTId() {
         return operatorTId;
     }
@@ -278,6 +337,8 @@ public class Transaction {
         this.operatorTId = operatorTId;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="OPERATORTIME")
     public Date getOperatorDateTime() {
         return operatorDateTime;
     }
@@ -286,6 +347,7 @@ public class Transaction {
         this.operatorDateTime = operatorDateTime;
     }
 
+    @Column(name="STF")
     public Integer getStf() {
         return stf;
     }
@@ -294,6 +356,7 @@ public class Transaction {
         this.stf = stf;
     }
 
+    @Column(name="STFRESULT")
     public Integer getStfResult() {
         return stfResult;
     }
@@ -302,6 +365,7 @@ public class Transaction {
         this.stfResult = stfResult;
     }
 
+    @Column(name="OPREVERSE")
     public Integer getOpReverse() {
         return opReverse;
     }
@@ -310,6 +374,7 @@ public class Transaction {
         this.opReverse = opReverse;
     }
 
+    @Column(name="BKREVERSE")
     public Integer getBkReverse() {
         return bkReverse;
     }

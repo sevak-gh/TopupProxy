@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sevak Gharibian
  */
-@Repository("JdbcPaymentChannelRepository")
+@Repository
 public class JdbcPaymentChannelRepositoryImpl implements PaymentChannelRepository {
 
     private final Logger LOG = LoggerFactory.getLogger(JdbcPaymentChannelRepositoryImpl.class);

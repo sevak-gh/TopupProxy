@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sevak Gharibian
  */
-@Repository("JdbcTransactionRepository")
+@Repository
 public class JdbcTransactionRepositoryImpl implements TransactionRepository {
 
     private final Logger LOG = LoggerFactory.getLogger(JdbcOperatorRepositoryImpl.class);
@@ -50,7 +50,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public List<Transaction> findBySTFProvider(int stf, int provider) {
+    public List<Transaction> findByStfProvider(Integer stf, int provider) {
         String sql = "select id, provider, token, type, state, resnum, refnum, revnum, "
                      + "clientip, amount, channel, consumer, bankcode, client, customerip, "
                      + "trtime, bankverify, verifytime, status, operator, oprcommand, "
@@ -61,7 +61,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public Transaction findByProviderTransactionId(int provider, String transactionId) {
+    public Transaction findByProviderOperatorTId(int provider, String operatorTId) {
         String sql = "select id, provider, token, type, state, resnum, refnum, revnum, "
                      + "clientip, amount, channel, consumer, bankcode, client, customerip, "
                      + "trtime, bankverify, verifytime, status, operator, oprcommand, "
@@ -69,7 +69,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                      + "bkreverse from info_topup_transactions where provider = ? and oprtid = ?";
         Transaction transaction = null;
         try {
-            transaction = jdbcTemplate.queryForObject(sql, new Object[] {provider, transactionId}, new TransactionRowMapper());
+            transaction = jdbcTemplate.queryForObject(sql, new Object[] {provider, operatorTId}, new TransactionRowMapper());
         } catch (EmptyResultDataAccessException e) {
             LOG.debug("jdbctemplate empty result set handled", e);
         }
@@ -77,6 +77,14 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
+    public void save(final Transaction transaction) {
+        if (transaction.getId() == null) {
+            create(transaction);
+        } else {
+            update(transaction);
+        }
+    }
+
     public void update(final Transaction transaction) {
         final String sql = "update info_topup_transactions set provider=?, token=?, type=?, "
                            + "state=?, resnum=?, refnum=?, revnum=?, clientip=?, amount=?, "
@@ -160,7 +168,6 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
         });
     }
 
-    @Override
     public void create(final Transaction transaction) {
         final String sql = "insert into info_topup_transactions(provider, token, type, state, resnum, refnum, revnum, "
                            + "clientip, amount, channel, consumer, bankcode, client, customerip, "

@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  *
  * @author Sevak Gharibian
  */
-@Repository("JdbcBalanceRepository")
+@Repository
 public class JdbcBalanceRepositoryImpl implements BalanceRepository {
 
     private final JdbcTemplate jdbcTemplate;

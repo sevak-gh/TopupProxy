@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sevak Gharibian
  */
-@Repository("JdbcOperatorRepository")
+@Repository
 public class JdbcOperatorRepositoryImpl implements OperatorRepository {
 
     private final Logger LOG = LoggerFactory.getLogger(JdbcOperatorRepositoryImpl.class);

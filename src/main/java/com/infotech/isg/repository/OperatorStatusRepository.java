@@ -9,5 +9,5 @@ import com.infotech.isg.domain.OperatorStatus;
  */
 public interface OperatorStatusRepository {
     public OperatorStatus findById(int id);
-    public void update(OperatorStatus operatorStatus);
+    public void save(OperatorStatus operatorStatus);
 }

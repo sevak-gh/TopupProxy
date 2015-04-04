@@ -11,8 +11,7 @@ import com.infotech.isg.domain.Transaction;
  */
 public interface TransactionRepository {
     public List<Transaction> findByRefNumBankCodeClientId(String refNum, String bankCode, int clientId);
-    public List<Transaction> findBySTFProvider(int stf, int provider);
-    public Transaction findByProviderTransactionId(int provider, String transactionId);
-    public void create(Transaction transaction);
-    public void update(Transaction transaction);
+    public List<Transaction> findByStfProvider(Integer stf, int provider);
+    public Transaction findByProviderOperatorTId(int provider, String operatorTId);
+    public void save(Transaction transaction);
 }

@@ -1,5 +1,6 @@
 package com.infotech.isg.repository.jdbc;
 
+import com.infotech.isg.domain.Audit;
 import com.infotech.isg.repository.AuditLogRepository;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  *
  * @author Sevak Gharibian
  */
-@Repository("JdbcAuditLogRepository")
+@Repository
 public class JdbcAuditLogRepositoryImpl implements AuditLogRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -25,20 +26,33 @@ public class JdbcAuditLogRepositoryImpl implements AuditLogRepository {
     }
 
     @Override
-    public void create(String username, String bankCode, String amount,
-                       String channel, String state, String bankReceipt,
-                       String orderId, String consumer, String customerIp,
-                       String remoteIp, String action, int operatorId,
-                       String status, long isgDoc, String oprDoc,
-                       Date timestamp, long responseTime) {
+    public void save(Audit audit) {
 
         final String sql = "insert into info_topup_audit(username, bankCode, amount, channel, state, bankReceipt, orderId, consumer, "
                            + "customerIp, remoteIp, action, operator, status, isgDoc, oprDoc, timestamp, responseTime) values("
                            + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        jdbcTemplate.update(sql, new Object[] {username, bankCode, amount, channel, state, bankReceipt,
-                                               orderId, consumer, customerIp, remoteIp, action, operatorId,
-                                               status, isgDoc, oprDoc, timestamp, responseTime
+        if (audit.getId() != null) {
+            throw new RuntimeException("updating Audit not supported");
+        }
+
+        jdbcTemplate.update(sql, new Object[] {audit.getUsername(), 
+                                               audit.getBankCode(), 
+                                               audit.getAmount(),
+                                               audit.getChannel(), 
+                                               audit.getState(),
+                                               audit.getBankReceipt(),
+                                               audit.getOrderId(), 
+                                               audit.getConsumer(),
+                                               audit.getCustomerIp(),
+                                               audit.getRemoteIp(),
+                                               audit.getAction(),
+                                               audit.getOperatorId(),
+                                               audit.getStatus(),
+                                               audit.getIsgDoc(),
+                                               audit.getOprDoc(),
+                                               audit.getTimestamp(),
+                                               audit.getResponseTime()
                                               });
     }
 }
