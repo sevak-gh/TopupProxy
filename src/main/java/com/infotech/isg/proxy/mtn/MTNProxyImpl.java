@@ -79,6 +79,21 @@ public class MTNProxyImpl implements MTNProxy {
     }
 
     @Override
+    public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
+        return serviceCall(String.format("%s:%d:%s:46|%s", consumer, amount, username, password), trId);
+    }
+
+    @Override
+    public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
+        return serviceCall(String.format("%s:%d:%s:47|%s", consumer, amount, username, password), trId);
+    }
+
+    @Override
+    public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+        return serviceCall(String.format("%s:%d:%s:48|%s", consumer, amount, username, password), trId);
+    }
+
+    @Override
     public MTNProxyResponse verify(long trId) {
         return serviceCall(String.format("gs:%s|%s", username, password), trId);
     }
