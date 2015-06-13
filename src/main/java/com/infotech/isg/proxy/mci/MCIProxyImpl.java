@@ -29,6 +29,7 @@ public class MCIProxyImpl implements MCIProxy {
     private static final String SOAPACTION_RECHARGE = "Recharge";
     private static final String SOAPACTION_GET_REMAINED_BROKER_RECHARGE = "GetRemainedBrokerRecharge";
     private static final String SOAPACTION_RECHARGE_VERIFY = "RechargeVerify";
+    private static final String SOAPACTION_RECHARGE_CAPABILITY = "RechargeCapability";
 
     private final String url;
     private final String username;
@@ -174,6 +175,49 @@ public class MCIProxyImpl implements MCIProxy {
                 namespace,
                 "GetRemainedBrokerRechargeResponse",
                 MCIProxyGetRemainedBrokerRechargeResponse.class);
+
+        return response;
+    }
+
+    @Override
+    public MCIProxyRechargeCapabilityResponse rechargeCapability(String token, String consumer,
+                                                        int amount, long trId) {
+
+        // create empty soap request
+        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + SOAPACTION_RECHARGE_CAPABILITY);
+
+        // add request body/header
+        try {
+            SOAPHeader header = request.getSOAPHeader();
+            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", SOAPHelper.NAMESPACE_PREFIX));
+            usernameElement.setValue(username);
+            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", SOAPHelper.NAMESPACE_PREFIX));
+            String combination = username.toUpperCase() + "|" + password + "|" + token;
+            passwordElement.setValue(HashGenerator.getMD5(combination));
+            SOAPBody body = request.getSOAPBody();
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_RECHARGE_CAPABILITY, SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", SOAPHelper.NAMESPACE_PREFIX));
+            element.addTextNode(username);
+            element = bodyElement.addChildElement(new QName(namespace, "MobileNumber", SOAPHelper.NAMESPACE_PREFIX));
+            element.addTextNode(consumer);
+            element = bodyElement.addChildElement(new QName(namespace, "CardAmount", SOAPHelper.NAMESPACE_PREFIX));
+            element.addTextNode(Integer.toString(amount));
+            element = bodyElement.addChildElement(new QName(namespace, "TransactionID", SOAPHelper.NAMESPACE_PREFIX));
+            element.addTextNode("MCI" + Long.toString(trId));
+            request.saveChanges();
+        } catch (SOAPException e) {
+            throw new RuntimeException("soap extended request creation error", e);
+        }
+
+        // send message and get response
+        SOAPMessage soapResponse = SOAPHelper.callSOAP(request, url);
+
+        // process response
+        MCIProxyRechargeCapabilityResponse response = SOAPHelper.parseResponse(soapResponse,
+                                            namespace,
+                                            "RechargeCapabilityResponse",
+                                            MCIProxyRechargeCapabilityResponse.class);
 
         return response;
     }

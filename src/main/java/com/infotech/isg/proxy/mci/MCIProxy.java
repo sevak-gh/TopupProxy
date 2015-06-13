@@ -10,4 +10,5 @@ public interface MCIProxy {
     public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId);
     public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId);
     public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount);
+    public MCIProxyRechargeCapabilityResponse rechargeCapability(String token, String consumer, int amount, long trId);
 }
