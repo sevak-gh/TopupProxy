@@ -13,9 +13,7 @@ public interface MTNProxy {
     public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId);
     public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId);
     public MTNProxyResponse gprs(String consumer, int amount, long trId);
-    public MTNProxyResponse gprsDaily(String consumer, int amount, long trId);
-    public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId);
-    public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId);
+    public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId);
     public MTNProxyResponse verify(long trId);
     public MTNProxyResponse getBalance();
 }
