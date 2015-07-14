@@ -60,4 +60,9 @@ public interface SpringDataJpaBalanceRepository extends BalanceRepository, Repos
     @Query("update Balance balance set balance.jiring = :amount, balance.jiringTimestamp = :timestamp")
     public void updateJiring(@Param("amount") long amount, 
                              @Param("timestamp") Date timestamp);
+    @Override
+    @Modifying
+    @Query("update Balance balance set balance.rightel = :amount, balance.rightelTimestamp = :timestamp")
+    public void updateRightel(@Param("amount") long amount, 
+                              @Param("timestamp") Date timestamp);
 }

@@ -29,6 +29,7 @@ public class Balance {
     private Long mci500000;
     private Long mci1000000;
     private Long mtn;
+    private Long rightel;
     private Long jiring;
     private Date mci10000Timestamp;
     private Date mci20000Timestamp;
@@ -39,6 +40,7 @@ public class Balance {
     private Date mci1000000Timestamp;
     private Date mtnTimestamp;
     private Date jiringTimestamp;
+    private Date rightelTimestamp;
 
     @Id
     @Column(name="id", nullable=false)
@@ -131,6 +133,15 @@ public class Balance {
         this.jiring = jiring;
     }
 
+    @Column(name="Rightel")
+    public Long getRightel() {
+        return rightel;
+    }
+
+    public void setRightel(Long rightel) {
+        this.rightel = rightel;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="MCI10000Timestamp")
     public Date getMci10000Timestamp() {
@@ -221,9 +232,19 @@ public class Balance {
         this.jiringTimestamp = timestamp;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="RightelTimestamp")
+    public Date getRightelTimestamp() {
+        return rightelTimestamp;
+    }
+
+    public void setRightelTimestamp(Date timestamp) {
+        this.rightelTimestamp = timestamp;
+    }
+
     @Override
     public String toString() {
-        return String.format("Balance[MCI1:%d, MCI2:%d, MCI5:%d, MCI10:%d, MCI20:%d, MCI50:%d, MCI100:%d, MTN:%d, Jiring:%d]",
+        return String.format("Balance[MCI1:%d, MCI2:%d, MCI5:%d, MCI10:%d, MCI20:%d, MCI50:%d, MCI100:%d, MTN:%d, Jiring:%d, Rightel: %d]",
                              mci10000,
                              mci20000,
                              mci50000,
@@ -232,6 +253,7 @@ public class Balance {
                              mci500000,
                              mci1000000,
                              mtn,
-                             jiring);
+                             jiring,
+                             rightel);
     }
 }

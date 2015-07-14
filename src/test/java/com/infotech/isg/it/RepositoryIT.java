@@ -486,6 +486,7 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
         balanceRepository.updateMCI1000000(amount, timestamp);        
         balanceRepository.updateMTN(amount, timestamp);        
         balanceRepository.updateJiring(amount, timestamp);        
+        balanceRepository.updateRightel(amount, timestamp);        
 
         // assert        
         JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
@@ -513,6 +514,8 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
                                 balance.setMtnTimestamp(rs.getTimestamp("MTNTimestamp"));
                                 balance.setJiring(rs.getLong("Jiring"));
                                 balance.setJiringTimestamp(rs.getTimestamp("JiringTimestamp"));
+                                balance.setRightel(rs.getLong("Rightel"));
+                                balance.setRightelTimestamp(rs.getTimestamp("RightelTimestamp"));
                                return balance;
                             }
                         });
@@ -535,5 +538,7 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
         assertThat(balance.getMtnTimestamp().compareTo(timestamp), is(0));
         assertThat(balance.getJiring(), is(amount));
         assertThat(balance.getJiringTimestamp().compareTo(timestamp), is(0));
-    }
+        assertThat(balance.getRightel(), is(amount));
+        assertThat(balance.getRightelTimestamp().compareTo(timestamp), is(0));
+   }
 }

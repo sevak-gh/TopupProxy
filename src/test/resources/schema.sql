@@ -103,6 +103,7 @@ CREATE TABLE `info_topup_balance` (
   `MCI1000000` bigint unsigned,
   `MTN` bigint unsigned,
   `Jiring` bigint unsigned,
+  `Rightel` bigint unsigned,
   `MCI10000Timestamp` datetime,
   `MCI20000Timestamp` datetime,
   `MCI50000Timestamp` datetime,
@@ -112,6 +113,7 @@ CREATE TABLE `info_topup_balance` (
   `MCI1000000Timestamp` datetime,
   `MTNTimestamp` datetime,
   `JiringTimestamp` datetime,
+  `RightelTimestamp` datetime,
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 );

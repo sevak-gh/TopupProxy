@@ -30,6 +30,7 @@ public class Operator {
     public static final int MTN_ID = 1;
     public static final int MCI_ID = 2;
     public static final int JIRING_ID = 3;
+    public static final int RIGHTEL_ID = 4;
 
     @Id
     @Column(name="ID", nullable=false) 
@@ -81,6 +82,7 @@ public class Operator {
             case MTN_ID: return "MTN";
             case MCI_ID: return "MCI";
             case JIRING_ID: return "Jiring";
+            case RIGHTEL_ID: return "Rightel";
             default: return "";
         }
     }

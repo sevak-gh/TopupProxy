@@ -17,4 +17,5 @@ public interface BalanceRepository {
     public void updateMCI1000000(long amount, Date timestamp);
     public void updateMTN(long amount, Date timestamp);
     public void updateJiring(long amount, Date timestamp);
+    public void updateRightel(long amount, Date timestamp);
 }

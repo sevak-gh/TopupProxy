@@ -24,7 +24,8 @@ insert into info_topup_client_ips values(1,'2.2.2.2');
 delete from info_topup_audit;
 update info_topup_operator_last_status set status='READY', timestamp=now() where id=2;
 
-insert into info_topup_balance values(0,0,0,0,0,0,0,0,0,
+insert into info_topup_balance values(0,0,0,0,0,0,0,0,0,0,
+       '2015-03-01 01:00:00',
        '2015-03-01 01:00:00',
        '2015-03-01 01:00:00',
        '2015-03-01 01:00:00',

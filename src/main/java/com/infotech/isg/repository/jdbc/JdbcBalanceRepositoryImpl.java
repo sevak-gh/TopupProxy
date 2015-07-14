@@ -77,4 +77,10 @@ public class JdbcBalanceRepositoryImpl implements BalanceRepository {
         final String sql = "update info_topup_balance set Jiring=?, JiringTimestamp=?";
         jdbcTemplate.update(sql, new Object[] {amount, timestamp});
     }
+
+    @Override
+    public void updateRightel(long amount, Date timestamp) {
+        final String sql = "update info_topup_balance set Rightel=?, RightelTimestamp=?";
+        jdbcTemplate.update(sql, new Object[] {amount, timestamp});
+    }
 }

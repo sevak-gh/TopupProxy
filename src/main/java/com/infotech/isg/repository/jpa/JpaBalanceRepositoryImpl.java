@@ -80,7 +80,7 @@ public class JpaBalanceRepositoryImpl implements BalanceRepository {
         query.setParameter("amount", amount);
         query.setParameter("timestamp", timestamp);
         query.executeUpdate();
-   }
+    }
 
     @Override
     public void updateMTN(long amount, Date timestamp) {
@@ -88,7 +88,7 @@ public class JpaBalanceRepositoryImpl implements BalanceRepository {
         query.setParameter("amount", amount);
         query.setParameter("timestamp", timestamp);
         query.executeUpdate();
-   }
+    }
 
     @Override
     public void updateJiring(long amount, Date timestamp) {
@@ -96,5 +96,13 @@ public class JpaBalanceRepositoryImpl implements BalanceRepository {
         query.setParameter("amount", amount);
         query.setParameter("timestamp", timestamp);
         query.executeUpdate();
-   }
+    }
+
+    @Override
+    public void updateRightel(long amount, Date timestamp) {
+        Query query = em.createQuery("UPDATE Balance balance set balance.rightel = :amount, balance.rightelTimestamp = :timestamp");
+        query.setParameter("amount", amount);
+        query.setParameter("timestamp", timestamp);
+        query.executeUpdate();
+    }
 }
