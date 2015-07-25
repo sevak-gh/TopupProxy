@@ -47,7 +47,7 @@ public class RightelProxyImpl implements RightelProxy {
         try {
             SOAPHeader header = request.getSOAPHeader();
             SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AccountCredentials", SOAPHelper.NAMESPACE_PREFIX));
-            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "userName", SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "username", SOAPHelper.NAMESPACE_PREFIX));
             usernameElement.setValue(username);
             SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "password", SOAPHelper.NAMESPACE_PREFIX));
             passwordElement.setValue(password);
@@ -84,7 +84,7 @@ public class RightelProxyImpl implements RightelProxy {
         try {
             SOAPHeader header = request.getSOAPHeader();
             SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AccountCredentials", SOAPHelper.NAMESPACE_PREFIX));
-            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "userName", SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "username", SOAPHelper.NAMESPACE_PREFIX));
             usernameElement.setValue(username);
             SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "password", SOAPHelper.NAMESPACE_PREFIX));
             passwordElement.setValue(password);
@@ -120,7 +120,7 @@ public class RightelProxyImpl implements RightelProxy {
         try {
             SOAPHeader header = request.getSOAPHeader();
             SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AccountCredentials", SOAPHelper.NAMESPACE_PREFIX));
-            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "userName", SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "username", SOAPHelper.NAMESPACE_PREFIX));
             usernameElement.setValue(username);
             SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "password", SOAPHelper.NAMESPACE_PREFIX));
             passwordElement.setValue(password);
@@ -154,7 +154,7 @@ public class RightelProxyImpl implements RightelProxy {
         try {
             SOAPHeader header = request.getSOAPHeader();
             SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AccountCredentials", SOAPHelper.NAMESPACE_PREFIX));
-            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "userName", SOAPHelper.NAMESPACE_PREFIX));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "username", SOAPHelper.NAMESPACE_PREFIX));
             usernameElement.setValue(username);
             SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "password", SOAPHelper.NAMESPACE_PREFIX));
             passwordElement.setValue(password);
