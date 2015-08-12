@@ -15,18 +15,17 @@ import org.springframework.data.repository.query.Param;
 public interface SpringDataJpaTransactionRepository extends TransactionRepository, Repository<Transaction, Long>  {
 
     @Override
-    @Query("SELECT transaction FROM Transaction transaction WHERE transaction.refNum = :refNum " +
-           " and transaction.bankCode = :bankCode and transaction.clientId = :clientId")
-   public List<Transaction> findByRefNumBankCodeClientId(@Param("refNum") String refNum, 
+    @Query(name="findByRefNumBankCodeClientId")
+    public List<Transaction> findByRefNumBankCodeClientId(@Param("refNum") String refNum, 
                                                           @Param("bankCode") String bankCode, 
                                                           @Param("clientId") int clientId);
     @Override
-    @Query("SELECT transaction FROM Transaction transaction WHERE transaction.stf = :stf and transaction.provider = :provider")
+    @Query(name="findByStfProvider")
     public List<Transaction> findByStfProvider(@Param("stf") Integer stf, 
                                                @Param("provider") int provider);
 
     @Override
-    @Query("SELECT transaction FROM Transaction transaction WHERE transaction.provider = :provider and transaction.operatorTId = :operatorTId") 
+    @Query(name="findByProviderOperatorTId")
     public Transaction findByProviderOperatorTId(@Param("provider")int provider, 
                                                  @Param("operatorTId") String operatorTId);
 }
