@@ -20,6 +20,13 @@ import java.net.MalformedURLException;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.NoSuchAlgorithmException;
+import java.security.KeyManagementException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,9 +72,31 @@ public class SOAPHelper {
         SOAPMessage response = null;
         SOAPConnection cnn = null;
         try {
+            //TODO fix this limitation
+            // bypass host checking during SSL handshake
             HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) { return true; }
             });
+            //TODO fix this limitation
+            // bypass cert checking during SSL handshake
+            try {
+                SSLContext sslCtx = SSLContext.getInstance("SSL");
+                sslCtx.init(null,                       // key manager
+                            new TrustManager[] {        // trust manager
+                                new X509TrustManager() {
+                                    public X509Certificate[] getAcceptedIssuers() { return null; }
+                                    public void checkClientTrusted(X509Certificate[] certs, String st) {}
+                                    public void checkServerTrusted(X509Certificate[] certs, String st) {}
+                                }
+                            },
+                            new SecureRandom());        // random generator
+                HttpsURLConnection.setDefaultSSLSocketFactory(sslCtx.getSocketFactory());
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException("invalid SSL algorithm for initialization", e);
+            } catch (KeyManagementException e) {
+                throw new RuntimeException("invalid SSL key manager for initialization", e);
+            }
+
             cnn = SOAPConnectionFactory.newInstance().createConnection();
             URL endpoint = new URL(url);
             if (LOG.isDebugEnabled()) {
