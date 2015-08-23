@@ -29,8 +29,8 @@ public class JdbcAuditLogRepositoryImpl implements AuditLogRepository {
     public void save(Audit audit) {
 
         final String sql = "insert into info_topup_audit(username, bankCode, amount, channel, state, bankReceipt, orderId, consumer, "
-                           + "customerIp, remoteIp, action, operator, status, isgDoc, oprDoc, timestamp, responseTime) values("
-                           + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                           + "customerIp, remoteIp, action, operator, vendor, status, isgDoc, oprDoc, timestamp, responseTime) values("
+                           + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if (audit.getId() != null) {
             throw new RuntimeException("updating Audit not supported");
@@ -48,6 +48,7 @@ public class JdbcAuditLogRepositoryImpl implements AuditLogRepository {
                                                audit.getRemoteIp(),
                                                audit.getAction(),
                                                audit.getOperatorId(),
+                                               audit.getVendor(),
                                                audit.getStatus(),
                                                audit.getIsgDoc(),
                                                audit.getOprDoc(),

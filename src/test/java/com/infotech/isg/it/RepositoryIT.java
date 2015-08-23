@@ -237,6 +237,7 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
         String consumer = "09125067064";
         int stf = 1;
         String operatorTId = "opr123456"; 
+        String vendor = "infotech"; 
         transaction = new Transaction();
         transaction.setProvider(Operator.MCI_ID);
         transaction.setAction(ServiceActions.TOP_UP);
@@ -256,6 +257,7 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
         transaction.setVerifyDateTime(new Date());
         transaction.setStf(stf);
         transaction.setOperatorTId(operatorTId);
+        transaction.setVendor(vendor);
         List<Transaction> transactions = null;
 
         // act
@@ -274,6 +276,7 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
         assertThat(transaction, is(notNullValue()));
         assertThat(transaction.getProvider(), is(Operator.MCI_ID));
         assertThat(transaction.getOperatorTId(), is(operatorTId));
+        assertThat(transaction.getVendor(), is(vendor));
     }
 
     @Test
@@ -396,6 +399,7 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
         String remoteIp = "10.20.30.40";
         String action = "action";
         int operatorId = 1;
+        String vendor = "infotech";
         String status = "Error";
         long isgDoc = -5;
         String oprDoc = "";
@@ -419,6 +423,7 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
         audit.setOprDoc(oprDoc);
         audit.setTimestamp(timestamp);
         audit.setResponseTime(responseTime);
+        audit.setVendor(vendor);
 
         // act
         auditLogRepository.save(audit);

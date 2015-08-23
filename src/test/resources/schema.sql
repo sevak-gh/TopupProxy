@@ -34,6 +34,7 @@ CREATE TABLE `info_topup_transactions` (
   `STFRESULT` tinyint,
   `OPREVERSE` tinyint,
   `BKREVERSE` tinyint,
+  `VENDOR` varchar(50),
   PRIMARY KEY (`ID`)
 );
 
@@ -77,6 +78,7 @@ CREATE TABLE `info_topup_audit` (
   `oprDoc` varchar(50),
   `timestamp` datetime NOT NULL,
   `responseTime` bigint NOT NULL,
+  `vendor` varchar(50),
   PRIMARY KEY (`id`)
 );
 

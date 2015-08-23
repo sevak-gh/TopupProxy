@@ -44,7 +44,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                      + "clientip, amount, channel, consumer, bankcode, client, customerip, "
                      + "trtime, bankverify, verifytime, status, operator, oprcommand, "
                      + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, "
-                     + "bkreverse from info_topup_transactions where refnum = ? and "
+                     + "bkreverse, vendor from info_topup_transactions where refnum = ? and "
                      + "bankcode = ? and client = ?";
         return jdbcTemplate.query(sql, new Object[] {refNum, bankCode, clientId}, new TransactionRowMapper());
     }
@@ -55,7 +55,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                      + "clientip, amount, channel, consumer, bankcode, client, customerip, "
                      + "trtime, bankverify, verifytime, status, operator, oprcommand, "
                      + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, "
-                     + "bkreverse from info_topup_transactions where stf = ? and "
+                     + "bkreverse, vendor from info_topup_transactions where stf = ? and "
                      + "provider = ?";
         return jdbcTemplate.query(sql, new Object[] {stf, provider}, new TransactionRowMapper());
     }
@@ -66,7 +66,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                      + "clientip, amount, channel, consumer, bankcode, client, customerip, "
                      + "trtime, bankverify, verifytime, status, operator, oprcommand, "
                      + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, "
-                     + "bkreverse from info_topup_transactions where provider = ? and oprtid = ?";
+                     + "bkreverse, vendor from info_topup_transactions where provider = ? and oprtid = ?";
         Transaction transaction = null;
         try {
             transaction = jdbcTemplate.queryForObject(sql, new Object[] {provider, operatorTId}, new TransactionRowMapper());
@@ -91,7 +91,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                            + "channel=?, consumer=?, bankcode=?, client=?, customerip=?, "
                            + "trtime=?, bankverify=?, verifytime=?, status=?, operator=?, "
                            + "oprcommand=?, oprresponse=?, oprtid=?, operatortime=?, stf=?, "
-                           + "stfresult=?, opreverse=?, bkreverse=? where id=?";
+                           + "stfresult=?, opreverse=?, bkreverse=?, vendor=? where id=?";
         jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps =  connection.prepareStatement(sql);
@@ -162,7 +162,8 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                 } else {
                     ps.setNull(27, java.sql.Types.TINYINT);
                 }
-                ps.setLong(28, transaction.getId());
+                ps.setString(28, transaction.getVendor());
+                ps.setLong(29, transaction.getId());
                 return ps;
             }
         });
@@ -172,8 +173,8 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
         final String sql = "insert into info_topup_transactions(provider, token, type, state, resnum, refnum, revnum, "
                            + "clientip, amount, channel, consumer, bankcode, client, customerip, "
                            + "trtime, bankverify, verifytime, status, operator, oprcommand, "
-                           + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, bkreverse) values( "
-                           + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                           + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, bkreverse, vendor) values( "
+                           + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -245,6 +246,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                 } else {
                     ps.setNull(27, java.sql.Types.TINYINT);
                 }
+                ps.setString(28, transaction.getVendor());
                 return ps;
             }
         }, keyHolder);
@@ -293,6 +295,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
             transaction.setOpReverse((rs.wasNull()) ? null : new Integer(opReverse));
             int bkReverse = rs.getInt("bkreverse");
             transaction.setBkReverse((rs.wasNull()) ? null : new Integer(bkReverse));
+            transaction.setVendor(rs.getString("vendor"));
             return transaction;
         }
     }

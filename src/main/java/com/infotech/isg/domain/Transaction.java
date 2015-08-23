@@ -126,6 +126,10 @@ public class Transaction {
     // seems like not being used anymore
     private Integer bkReverse;
 
+    // vendor name requesting topup service
+    // for example there may be two vendors registered for MTN topup such as infotech and MTN
+    private String vendor;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID", nullable=false)
@@ -383,9 +387,18 @@ public class Transaction {
         this.bkReverse = bkReverse;
     }
 
+    @Column(name="VENDOR")
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
+
     @Override
     public String toString() {
-        return String.format("[%d:(%s,%d,%s)RRN:%s,status:%d,operatorResCode:%d,STF:%d(%s)]",
-                             id, consumer, amount, Operator.getName(provider), refNum, status, operatorResponseCode, stf, trDateTime);
+        return String.format("Transaction[%d:(%s,%d,%s)RRN:%s,status:%d,operatorResCode:%d,STF:%d(%s),vendor:%s]",
+                             id, consumer, amount, Operator.getName(provider), refNum, status, operatorResponseCode, stf, trDateTime, vendor);
     }
 }

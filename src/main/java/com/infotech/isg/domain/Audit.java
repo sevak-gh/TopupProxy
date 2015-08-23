@@ -37,6 +37,7 @@ public class Audit {
     private String oprDoc;
     private Date timestamp;
     private long responseTime;  // msec
+    private String vendor;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -201,5 +202,14 @@ public class Audit {
 
     public void setResponseTime(long responseTime) {
         this.responseTime = responseTime;
+    }
+
+    @Column(name="vendor")
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
     }
 }
