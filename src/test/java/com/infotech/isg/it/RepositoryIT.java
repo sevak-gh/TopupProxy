@@ -8,6 +8,7 @@ import com.infotech.isg.domain.BankCodes;
 import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.domain.OperatorStatus;
 import com.infotech.isg.domain.Balance;
+import com.infotech.isg.domain.BalanceLog;
 import com.infotech.isg.domain.Audit;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.TransactionRepository;
@@ -16,6 +17,7 @@ import com.infotech.isg.repository.PaymentChannelRepository;
 import com.infotech.isg.repository.AuditLogRepository;
 import com.infotech.isg.repository.OperatorStatusRepository;
 import com.infotech.isg.repository.BalanceRepository;
+import com.infotech.isg.repository.BalanceLogRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -71,6 +73,9 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
 
     @Autowired
     private BalanceRepository balanceRepository;
+
+    @Autowired
+    private BalanceLogRepository balanceLogRepository;
 
     @Autowired
     private DataSource ds;
@@ -546,4 +551,17 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
         assertThat(balance.getRightel(), is(amount));
         assertThat(balance.getRightelTimestamp().compareTo(timestamp), is(0));
    }
+
+    @Test
+    public void shouldInsertBalanceLogSucceedWithoutExceptions() {
+        // arrange
+        BalanceLog balanceLog = new BalanceLog();
+        balanceLog.setMci10000(32000L);
+        balanceLog.setMci10000Timestamp(new Date());
+
+        // act
+        balanceLogRepository.save(balanceLog);
+
+        // assert
+    }
 }

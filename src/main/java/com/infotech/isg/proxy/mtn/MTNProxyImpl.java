@@ -44,56 +44,56 @@ public class MTNProxyImpl implements MTNProxy {
     }
 
     @Override
-    public MTNProxyResponse recharge(String consumer, int amount, long trId) {
-        return serviceCall(String.format("%s:%d:%s|%s", consumer, amount, username, password), trId);
+    public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
+        return serviceCall(String.format("%s:%d:%s|%s", consumer, amount, username, password), trId, channel);
     }
 
     @Override
-    public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
-        return serviceCall(String.format("pay:b:%s:%d:%s|%s", consumer, amount, username, password), trId);
+    public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
+        return serviceCall(String.format("pay:b:%s:%d:%s|%s", consumer, amount, username, password), trId, channel);
     }
 
     @Override
-    public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
-        return serviceCall(String.format("pay:d:%s:%d:%s|%s", consumer, amount, username, password), trId);
+    public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
+        return serviceCall(String.format("pay:d:%s:%d:%s|%s", consumer, amount, username, password), trId, channel);
     }
 
     @Override
-    public MTNProxyResponse wow(String consumer, int amount, long trId) {
-        return serviceCall(String.format("%s:%d:%s:19|%s", consumer, amount, username, password), trId);
+    public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
+        return serviceCall(String.format("%s:%d:%s:19|%s", consumer, amount, username, password), trId, channel);
     }
 
     @Override
-    public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
-        return serviceCall(String.format("%s:%d:%s|%s", consumer, amount, username, password), trId);
+    public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
+        return serviceCall(String.format("%s:%d:%s|%s", consumer, amount, username, password), trId, channel);
     }
 
     @Override
-    public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
-        return serviceCall(String.format("%s:%d:%s|%s", consumer, amount, username, password), trId);
+    public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
+        return serviceCall(String.format("%s:%d:%s|%s", consumer, amount, username, password), trId, channel);
     }
 
     @Override
-    public MTNProxyResponse gprs(String consumer, int amount, long trId) {
-        return serviceCall(String.format("%s:%d:%s:43|%s", consumer, amount, username, password), trId);
+    public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
+        return serviceCall(String.format("%s:%d:%s:43|%s", consumer, amount, username, password), trId, channel);
     }
 
     @Override
-    public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
-        return serviceCall(String.format("%s:%d:%s:%d|%s", consumer, amount, username, profileId, password), trId);
+    public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
+        return serviceCall(String.format("%s:%d:%s:%d|%s", consumer, amount, username, profileId, password), trId, channel);
     }
 
     @Override
     public MTNProxyResponse verify(long trId) {
-        return serviceCall(String.format("gs:%s|%s", username, password), trId);
+        return serviceCall(String.format("gs:%s|%s", username, password), trId, "Internet");
     }
 
     @Override
     public MTNProxyResponse getBalance() {
-        return serviceCall(String.format("gb:%s|%s", username, password), 0);
+        return serviceCall(String.format("gb:%s|%s", username, password), 0, "Internet");
     }
 
-    private MTNProxyResponse serviceCall(String command, long trId) {
+    private MTNProxyResponse serviceCall(String command, long trId, String channel) {
 
         // create empty soap request
         SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, null);
@@ -107,7 +107,7 @@ public class MTNProxyImpl implements MTNProxy {
             etiRequest.setUsername("");
             etiRequest.setPassword("");
             etiRequest.addParameter("ext_tid", "info" + Long.toString(trId));
-            etiRequest.addParameter("ext_id", "Internet");
+            etiRequest.addParameter("ext_id", channel);
             etiRequest.addParameter("ext_name", vendor);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             etiRequest.addParameter("ext_date", dateFormat.format(new Date()));

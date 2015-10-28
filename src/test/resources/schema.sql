@@ -120,3 +120,27 @@ CREATE TABLE `info_topup_balance` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `info_topup_balance_log` (
+  `MCI10000` bigint unsigned,
+  `MCI20000` bigint unsigned,
+  `MCI50000` bigint unsigned,
+  `MCI100000` bigint unsigned,
+  `MCI200000` bigint unsigned,
+  `MCI500000` bigint unsigned,
+  `MCI1000000` bigint unsigned,
+  `MTN` bigint unsigned,
+  `Jiring` bigint unsigned,
+  `Rightel` bigint unsigned,
+  `MCI10000Timestamp` datetime,
+  `MCI20000Timestamp` datetime,
+  `MCI50000Timestamp` datetime,
+  `MCI100000Timestamp` datetime,
+  `MCI200000Timestamp` datetime,
+  `MCI500000Timestamp` datetime,
+  `MCI1000000Timestamp` datetime,
+  `MTNTimestamp` datetime,
+  `JiringTimestamp` datetime,
+  `RightelTimestamp` datetime,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+);
