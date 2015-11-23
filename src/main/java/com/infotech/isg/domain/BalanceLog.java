@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 
 
 /**
@@ -16,6 +18,17 @@ import javax.persistence.TemporalType;
  *
  * @author Sevak Gharibian
  */
+@NamedNativeQueries({
+    @NamedNativeQuery(
+        name = "findFirstRightelBalanceByDate",
+        query = "select balance.rightel, balance.righteltimestamp from info_topup_balance_log as balance "
+                + "inner join "
+                + "(select min(id) as minid from info_topup_balance_log "
+                    + "where concat(extract(YEAR from righteltimestamp),'-',extract(MONTH from righteltimestamp),'-',extract(DAY from righteltimestamp)) = "
+                    + "concat(extract(YEAR from :date),'-',extract(MONTH from :date),'-',extract(DAY from :date)) and (rightel != null)) as today "
+                + " on balance.id = today.minid",
+        resultClass=BalanceLog.class
+    )})
 @Entity
 @Table(name = "info_topup_balance_log")
 public class BalanceLog {

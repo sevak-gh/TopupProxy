@@ -11,4 +11,5 @@ import java.util.Date;
  */
 public interface BalanceLogRepository {
     public void save(BalanceLog balanceLog);
+    public BalanceLog findFirstRightelBalanceByDate(Date dt);
 }

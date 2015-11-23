@@ -3,6 +3,7 @@ package com.infotech.isg.repository.jpa;
 import com.infotech.isg.domain.BalanceLog;
 import com.infotech.isg.repository.BalanceLogRepository;
 
+import java.util.Date;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
 
@@ -27,5 +28,10 @@ public class JpaBalanceLogRepositoryImpl implements BalanceLogRepository {
     @Override
     public void save(BalanceLog balanceLog) {
         em.persist(balanceLog);
+    }
+
+    @Override
+    public BalanceLog findFirstRightelBalanceByDate(Date dt) {
+        throw new UnsupportedOperationException();
     }
 }

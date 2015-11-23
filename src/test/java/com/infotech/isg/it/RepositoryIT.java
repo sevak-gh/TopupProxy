@@ -564,4 +564,16 @@ public class RepositoryIT extends AbstractTransactionalTestNGSpringContextTests 
 
         // assert
     }
+
+    @Test(enabled=false)
+    public void shouldFindFirstRightelBalanceByDateSucceedWithoutException() {
+        // arrange
+        Date dt = new Date();
+        BalanceLog balance = null;
+
+        // act
+        balance = balanceLogRepository.findFirstRightelBalanceByDate(dt);
+
+        // assert
+    }
 }

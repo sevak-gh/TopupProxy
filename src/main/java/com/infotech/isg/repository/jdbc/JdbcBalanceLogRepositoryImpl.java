@@ -50,4 +50,9 @@ public class JdbcBalanceLogRepositoryImpl implements BalanceLogRepository {
                                                balanceLog.getJiring(), balanceLog.getJiringTimestamp(),
                                                balanceLog.getRightel(), balanceLog.getRightelTimestamp() });
     }
+
+    @Override
+    public BalanceLog findFirstRightelBalanceByDate(Date dt) {
+        throw new UnsupportedOperationException();
+    }
 }

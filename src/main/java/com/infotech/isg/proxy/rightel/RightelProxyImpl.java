@@ -38,7 +38,7 @@ public class RightelProxyImpl implements RightelProxy {
     }
 
     @Override
-    public RightelProxySubmitChargeRequestResponse submitChargeRequest(String consumer, int amount) {
+    public RightelProxySubmitChargeRequestResponse submitChargeRequest(String consumer, int amount, int channel) {
 
         // create empty soap request, no soap action header
         SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, null);
@@ -57,6 +57,8 @@ public class RightelProxyImpl implements RightelProxy {
             element.addTextNode(consumer);
             element = bodyElement.addChildElement(new QName(namespace, "amount", SOAPHelper.NAMESPACE_PREFIX));
             element.addTextNode(Integer.toString(amount));
+            element = bodyElement.addChildElement(new QName(namespace, "chargeChanel", SOAPHelper.NAMESPACE_PREFIX));
+            element.addTextNode(Integer.toString(channel));
             request.saveChanges();
         } catch (SOAPException e) {
             throw new RuntimeException("soap extended request creation error", e);

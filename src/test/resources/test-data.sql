@@ -1,3 +1,6 @@
+
+SET MODE MySQL;
+
 insert into info_topup_operators values(1,'MTN','active');
 insert into info_topup_operators values(2,'MCI','active');
 insert into info_topup_operators values(3,'Jiring','active');

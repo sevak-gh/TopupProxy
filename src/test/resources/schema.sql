@@ -1,3 +1,6 @@
+
+SET MODE MySQL;
+
 CREATE TABLE `info_topup_operators` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `NAME` varchar(50) DEFAULT NULL,
