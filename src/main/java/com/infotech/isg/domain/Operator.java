@@ -31,6 +31,7 @@ public class Operator {
     public static final int MCI_ID = 2;
     public static final int JIRING_ID = 3;
     public static final int RIGHTEL_ID = 4;
+    public static final int VOPAY_ID = 5;
 
     @Id
     @Column(name="ID", nullable=false) 
@@ -83,6 +84,7 @@ public class Operator {
             case MCI_ID: return "MCI";
             case JIRING_ID: return "Jiring";
             case RIGHTEL_ID: return "Rightel";
+            case VOPAY_ID: return "Vopay";
             default: return "";
         }
     }

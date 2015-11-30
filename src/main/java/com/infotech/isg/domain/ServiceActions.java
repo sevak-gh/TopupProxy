@@ -52,7 +52,8 @@ public class ServiceActions {
             return GPRS_COMBO;
         }
 
-        return actions.get(action);
+        Integer actionCode = actions.get(action);
+        return ((actionCode != null) ? actionCode.intValue() : 0);
     }
 
     // for grps combo only
