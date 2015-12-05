@@ -130,6 +130,9 @@ public class SOAPHelper {
         T result = null;
         try {
             SOAPBody responseBody = response.getSOAPBody();
+            if (responseBody.hasFault()) {
+                throw new ProxyAccessException("soap response has fault: " + responseBody.getFault().getFaultString());
+            }
             Iterator iterator = responseBody.getChildElements(new QName(namespace, tagName, NAMESPACE_PREFIX));
             if (!iterator.hasNext()) {
                 throw new ProxyAccessException("soap response body missing expected item");
