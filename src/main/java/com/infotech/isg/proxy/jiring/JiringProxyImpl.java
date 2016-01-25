@@ -28,7 +28,7 @@ public class JiringProxyImpl implements JiringProxy {
     }
 
     @Override
-    public TCSResponse salesRequest(String consumer, int amount, String brandId) {
+    public TCSResponse salesRequest(String consumer, int amount, String brandId, String sender) {
         TCSRequest request = new TCSRequest();
         request.setUsername(username);
         request.setPassword(password);
@@ -37,7 +37,7 @@ public class JiringProxyImpl implements JiringProxy {
         request.setFunctionParam2(Integer.toString(amount));
         request.setFunctionParam4(username);
         request.setFunctionParam6(consumer);
-        request.setFunctionParam7(consumer);
+        request.setFunctionParam7(sender);
         TCSResponse response = TCSConnection.call(request, url);
         return response;
     }

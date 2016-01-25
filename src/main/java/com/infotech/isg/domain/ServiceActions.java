@@ -20,6 +20,7 @@ public class ServiceActions {
     public static final int PRE_WIMAX = 6;          // MTN only
     public static final int GPRS = 7;
     public static final int GPRS_COMBO = 8;         // MTN only
+    public static final int WALLET = 9;             // Jiring only
 
     static {
         actions.put("top-up", TOP_UP);
@@ -30,6 +31,7 @@ public class ServiceActions {
         actions.put("pre-wimax", PRE_WIMAX);
         actions.put("gprs", GPRS);
         actions.put("gprs-00", GPRS_COMBO);
+        actions.put("wallet", WALLET);
     }
 
     public static boolean isActionExist(String action) {
