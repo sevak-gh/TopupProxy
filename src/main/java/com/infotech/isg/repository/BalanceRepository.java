@@ -1,5 +1,7 @@
 package com.infotech.isg.repository;
 
+import com.infotech.isg.domain.Balance;
+
 import java.util.Date;
 
 /**
@@ -18,4 +20,7 @@ public interface BalanceRepository {
     public void updateMTN(long amount, Date timestamp);
     public void updateJiring(long amount, Date timestamp);
     public void updateRightel(long amount, Date timestamp);
+    public void updateMciPinLess(long amount, Date timestamp);
+    
+    public Balance findById(Integer id);
 }

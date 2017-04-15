@@ -1,5 +1,6 @@
 package com.infotech.isg.repository.jdbc;
 
+import com.infotech.isg.domain.Balance;
 import com.infotech.isg.repository.BalanceRepository;
 
 import java.util.Date;
@@ -82,5 +83,16 @@ public class JdbcBalanceRepositoryImpl implements BalanceRepository {
     public void updateRightel(long amount, Date timestamp) {
         final String sql = "update info_topup_balance set Rightel=?, RightelTimestamp=?";
         jdbcTemplate.update(sql, new Object[] {amount, timestamp});
+    }
+
+    @Override
+    public void updateMciPinLess(long amount, Date timestamp) {
+        final String sql = "update info_topup_balance set MciPinLess=?, MciPinLessTimestamp=?";
+        jdbcTemplate.update(sql, new Object[] {amount, timestamp});
+    }
+
+    @Override
+    public Balance findById(Integer id) {
+        throw new UnsupportedOperationException("not implemeted");    
     }
 }

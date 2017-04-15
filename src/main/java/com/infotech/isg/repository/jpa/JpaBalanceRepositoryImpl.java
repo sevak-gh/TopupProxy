@@ -105,4 +105,17 @@ public class JpaBalanceRepositoryImpl implements BalanceRepository {
         query.setParameter("timestamp", timestamp);
         query.executeUpdate();
     }
+
+    @Override
+    public void updateMciPinLess(long amount, Date timestamp) {
+        Query query = em.createQuery("UPDATE Balance balance set balance.mciPinLess = :amount, balance.mciPinLessTimestamp = :timestamp");
+        query.setParameter("amount", amount);
+        query.setParameter("timestamp", timestamp);
+        query.executeUpdate();
+    }
+
+    @Override
+    public Balance findById(Integer id) {   
+        throw new UnsupportedOperationException("not implemented");
+    }
 }
