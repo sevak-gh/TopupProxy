@@ -37,7 +37,7 @@
 
         <!-- spring -->
         <spring.version>4.1.1.RELEASE</spring.version>
-        <spring-data-jpa.version>1.8.0.RELEASE</spring-data-jpa.version>
+        <spring-data-jpa.version>1.11.23.RELEASE</spring-data-jpa.version>
 
         <!--    json   -->
         <jackson.version>2.9.9</jackson.version>
